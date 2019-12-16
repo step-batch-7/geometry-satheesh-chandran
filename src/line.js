@@ -42,6 +42,18 @@ class Line {
     const ySum = this.pointB.y + this.pointA.y;
     return [xSum / 2, ySum / 2];
   }
+  split() {
+    const middle = this.midPoint;
+    const firstLine = new Line(
+      { x: this.pointA.x, y: this.pointA.y },
+      { x: middle[0], y: middle[1] }
+    );
+    const secondLine = new Line(
+      { x: middle[0], y: middle[1] },
+      { x: this.pointB.x, y: this.pointB.y }
+    );
+    return [firstLine, secondLine];
+  }
 }
 
 module.exports = Line;

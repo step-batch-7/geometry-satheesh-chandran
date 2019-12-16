@@ -70,4 +70,15 @@ describe('Line Class', function() {
       assert.deepStrictEqual(a.midPoint, [2.5, 2]);
     });
   });
+
+  describe('split', function() {
+    it('should split the given line from the middle of the given line', function() {
+      const a = new Line({ x: -3, y: 5 }, { x: 8, y: -1 });
+      const expected = [
+        new Line({ x: -3, y: 5 }, { x: 2.5, y: 2 }),
+        new Line({ x: 2.5, y: 2 }, { x: 8, y: -1 })
+      ];
+      assert.deepStrictEqual(a.split(), expected);
+    });
+  });
 });

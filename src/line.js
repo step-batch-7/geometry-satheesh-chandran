@@ -28,6 +28,9 @@ class Line {
     const yRange = this.pointB.y - this.pointA.y;
     return yRange / xRange;
   }
+  isParellel(other) {
+    return this.slope == other.slope;
+  }
 }
 
 module.exports = Line;

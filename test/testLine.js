@@ -34,3 +34,16 @@ describe('slope', function() {
     assert.equal(a.slope, 1);
   });
 });
+
+describe('isParellel', function() {
+  it('should give true if two given lines are parellel ', function() {
+    const a = new Line({ x: 1, y: 3 }, { x: 3, y: 5 });
+    const b = new Line({ x: 1, y: 4 }, { x: 2, y: 5 });
+    assert.equal(a.isParellel(b), true);
+  });
+  it('should give false if two given lines are parellel ', function() {
+    const a = new Line({ x: 1, y: 3 }, { x: 3, y: 5 });
+    const b = new Line({ x: 1, y: 2 }, { x: 2, y: 5 });
+    assert.equal(a.isParellel(b), false);
+  });
+});

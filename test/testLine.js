@@ -27,3 +27,10 @@ describe('length', function() {
     assert.equal(a.length, 5);
   });
 });
+
+describe('slope', function() {
+  it('should return the slope of the given line', function() {
+    const a = new Line({ x: 1, y: 4 }, { x: 2, y: 5 });
+    assert.equal(a.slope, 1);
+  });
+});

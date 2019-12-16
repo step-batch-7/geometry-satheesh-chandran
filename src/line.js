@@ -23,6 +23,11 @@ class Line {
     const yRange = this.pointB.y - this.pointA.y;
     return Math.sqrt(xRange * xRange + yRange * yRange);
   }
+  get slope() {
+    const xRange = this.pointB.x - this.pointA.x;
+    const yRange = this.pointB.y - this.pointA.y;
+    return yRange / xRange;
+  }
 }
 
 module.exports = Line;

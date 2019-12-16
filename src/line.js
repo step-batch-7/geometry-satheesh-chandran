@@ -13,10 +13,13 @@ class Line {
     return `[Line (${this.pointA.x},${this.pointA.y}) to (${this.pointB.x},${this.pointB.y})]`;
   }
   isEqualTo(other) {
-    return (
-      isPointsEqual(this.pointA, other.pointA) &&
-      isPointsEqual(this.pointB, other.pointB)
-    );
+    if (other instanceof Line) {
+      return (
+        isPointsEqual(this.pointA, other.pointA) &&
+        isPointsEqual(this.pointB, other.pointB)
+      );
+    }
+    return false;
   }
   get length() {
     const xRange = this.pointB.x - this.pointA.x;
@@ -29,6 +32,9 @@ class Line {
     return yRange / xRange;
   }
   isParellel(other) {
+    if (!other instanceof Line) {
+      return false;
+    }
     return this.slope == other.slope;
   }
 }

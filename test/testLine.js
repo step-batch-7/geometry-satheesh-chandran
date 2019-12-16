@@ -19,6 +19,14 @@ describe('isEqualTo', function() {
     const b = new Line({ x: 1, y: 2 }, { x: 3, y: 2 });
     assert.deepStrictEqual(a.isEqualTo(b), false);
   });
+  it('should give false if the given to lines are not equal', function() {
+    const a = new Line({ x: 1, y: 2 }, { x: 2, y: 3 });
+    const b = [
+      { x: 1, y: 2 },
+      { x: 3, y: 2 }
+    ];
+    assert.deepStrictEqual(a.isEqualTo(b), false);
+  });
 });
 
 describe('length', function() {
@@ -44,6 +52,14 @@ describe('isParellel', function() {
   it('should give false if two given lines are parellel ', function() {
     const a = new Line({ x: 1, y: 3 }, { x: 3, y: 5 });
     const b = new Line({ x: 1, y: 2 }, { x: 2, y: 5 });
+    assert.equal(a.isParellel(b), false);
+  });
+  it('should give false if other argument is not an instance of Line', function() {
+    const a = new Line({ x: 1, y: 3 }, { x: 3, y: 5 });
+    const b = [
+      { x: 1, y: 2 },
+      { x: 2, y: 5 }
+    ];
     assert.equal(a.isParellel(b), false);
   });
 });

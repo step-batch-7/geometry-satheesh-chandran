@@ -1,0 +1,23 @@
+{
+  "name": "geometry-satheesh-chandran",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/step-batch-7/geometry-satheesh-chandran.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/step-batch-7/geometry-satheesh-chandran/issues"
+  },
+  "homepage": "https://github.com/step-batch-7/geometry-satheesh-chandran#readme"
+}

@@ -37,6 +37,11 @@ class Line {
     }
     return this.slope == other.slope;
   }
+  get midPoint() {
+    const xSum = this.pointB.x + this.pointA.x;
+    const ySum = this.pointB.y + this.pointA.y;
+    return [xSum / 2, ySum / 2];
+  }
 }
 
 module.exports = Line;

@@ -8,6 +8,12 @@ class Point {
   visit(other) {
     return other(this.x, this.y);
   }
+  isEqualTo(other) {
+    if (other instanceof Point) {
+      return this.x == other.x && this.y == other.y;
+    }
+    return false;
+  }
 }
 
 module.exports = Point;

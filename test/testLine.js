@@ -1,5 +1,6 @@
 const assert = require('assert');
 const Line = require('../src/line');
+const Point = require('../src/point');
 
 describe('Line Class', function() {
   describe('toString', function() {
@@ -79,6 +80,38 @@ describe('Line Class', function() {
         new Line({ x: 2.5, y: 2 }, { x: 8, y: -1 })
       ];
       assert.deepStrictEqual(a.split(), expected);
+    });
+  });
+
+  describe('hasPoint', function() {
+    it('should return true if the given point lies in the line', function() {
+      const p = new Point(2, 2);
+      const a = new Line({ x: 1, y: 1 }, { x: 3, y: 3 });
+      assert.ok(a.hasPoint(p));
+
+      const q = new Point(1, 2);
+      const b = new Line({ x: 1, y: 1 }, { x: 1, y: 3 });
+      assert.ok(b.hasPoint(q));
+
+      const r = new Point(2, 1);
+      const c = new Line({ x: 1, y: 1 }, { x: 3, y: 1 });
+      assert.ok(c.hasPoint(r));
+    });
+    it('should return false if the given point not lies in the line', function() {
+      const p = new Point(2, 3);
+      const a = new Line({ x: 1, y: 1 }, { x: 3, y: 3 });
+      assert.ok(!a.hasPoint(p));
+    });
+  });
+
+  describe('findX', function() {
+    it('should return the value of X if value of Y is given', function() {
+      const a = new Line({ x: -2, y: 3 }, { x: 3, y: 8 });
+      assert.equal(a.findX(8), 3);
+      const b = new Line({ x: 1, y: 0 }, { x: 1, y: 5 });
+      assert.equal(b.findX(5), 1);
+      assert.equal(b.findX(0), 1);
+      // assert.equal(b.findX(6), NaN);
     });
   });
 });

@@ -54,6 +54,16 @@ class Line {
     );
     return [firstLine, secondLine];
   }
+  hasPoint(p) {
+    const tanQ = this.slope;
+    return (p.y - this.pointA.y) / (p.x - this.pointA.x) == tanQ;
+  }
+  findX(other) {
+    const slope = this.slope;
+    // const length = this.length;
+    const x = (other - this.pointA.y) / slope + this.pointA.x;
+    return x;
+  }
 }
 
 module.exports = Line;

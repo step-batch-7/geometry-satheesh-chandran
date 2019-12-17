@@ -27,6 +27,10 @@ class Circle {
     const h = this.o.y;
     return (x - g) ** 2 + (y - h) ** 2 == this.r ** 2;
   }
+
+  isOn(c) {
+    return c.hasPoint(this);
+  }
 }
 
 module.exports = Circle;

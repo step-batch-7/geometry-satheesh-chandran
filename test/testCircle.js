@@ -65,4 +65,17 @@ describe('circle', function() {
       assert.isFalse(c.hasPoint(p));
     });
   });
+
+  describe('isOn', function() {
+    it('should return true if the given circle passing through the given point', function() {
+      const c = new Circle({ x: 0, y: 0 }, 5);
+      const p = new Point(0, 5);
+      assert.ok(p.isOn(c));
+    });
+    it('should return false if the given circle not passing through the given point', function() {
+      const c = new Circle({ x: 0, y: 0 }, 5);
+      const p = new Point(0, 6);
+      assert.isFalse(p.isOn(c));
+    });
+  });
 });

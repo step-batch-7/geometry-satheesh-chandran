@@ -1,5 +1,6 @@
-const assert = require('assert');
+const assert = require('chai').assert;
 const Point = require('../src/point');
+const Line = require('../src/line');
 
 describe('Point Class', function() {
   describe('toString', function() {
@@ -53,6 +54,19 @@ describe('Point Class', function() {
       assert.equal(a.findDistanceTo(b), 5);
       const c = { x: 5, y: 1 };
       assert.equal(a.findDistanceTo(c), 5);
+    });
+  });
+
+  describe('isOn', function() {
+    it('should return true if the point present on given line', function() {
+      const point = new Point(2, 2);
+      const line = new Line({ x: 1, y: 1 }, { x: 3, y: 3 });
+      assert.ok(point.isOn(line));
+    });
+    it('should return false if the point is not lies in the given line', function() {
+      const point = new Point(4, 4);
+      const line = new Line({ x: 1, y: 1 }, { x: 3, y: 3 });
+      assert.isFalse(point.isOn(line));
     });
   });
 });

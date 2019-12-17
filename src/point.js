@@ -23,6 +23,10 @@ class Point {
     const yRange = this.y - other.y;
     return Math.sqrt(xRange * xRange + yRange * yRange);
   }
+
+  isOn(a) {
+    return a.hasPoint(this);
+  }
 }
 
 module.exports = Point;

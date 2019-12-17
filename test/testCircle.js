@@ -9,4 +9,32 @@ describe('circle', function() {
       assert.equal(circle.toString(), expected);
     });
   });
+
+  describe('isEqualTo', function() {
+    it('should return true if the given two circles are equal', function() {
+      const a = new Circle({ x: 0, y: 0 }, 5);
+      const b = new Circle({ x: 0, y: 0 }, 5);
+      assert.ok(a.isEqualTo(b));
+    });
+    it('should return false if the given two circles origin is same and radius is not equal', function() {
+      const a = new Circle({ x: 0, y: 0 }, 5);
+      const b = new Circle({ x: 0, y: 0 }, 4);
+      assert.isFalse(a.isEqualTo(b));
+    });
+    it('should return false if the given two circles origin is not same and radius are equal', function() {
+      const a = new Circle({ x: 0, y: 0 }, 5);
+      const b = new Circle({ x: 0, y: 1 }, 5);
+      assert.isFalse(a.isEqualTo(b));
+    });
+    it("should return false if the given two circle's origin and radius are different equal", function() {
+      const a = new Circle({ x: 0, y: 0 }, 4);
+      const b = new Circle({ x: 0, y: 1 }, 5);
+      assert.isFalse(a.isEqualTo(b));
+    });
+    it('should return false if the given other circle is not an instance of circle', function() {
+      const a = new Circle({ x: 0, y: 0 }, 5);
+      const b = { o: { x: 0, y: 0 }, r: 5 };
+      assert.isFalse(a.isEqualTo(b));
+    });
+  });
 });

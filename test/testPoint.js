@@ -42,8 +42,15 @@ describe('Point Class', function() {
   describe('clone', function() {
     it('should give a copy of the given point', function() {
       const a = new Point(2, 3);
-      const b = new Point(2, 3);
       assert.ok(a.isEqualTo(a.clone()));
+    });
+  });
+
+  describe('findDistanceTo', function() {
+    it('should return the distance from the one point to other point', function() {
+      const a = new Point(0, 1);
+      const b = new Point(5, 1);
+      assert.equal(a.findDistanceTo(b), 5);
     });
   });
 });

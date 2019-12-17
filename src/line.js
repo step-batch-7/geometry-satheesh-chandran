@@ -87,23 +87,41 @@ class Line {
     const slope = this.slope;
     const x = (other - this.pointA.y) / slope + this.pointA.x;
     const newPoint = new Point(x, other);
+    const consistOf = isBetween([this.pointA.y, this.pointB.y], other);
+    if (this.pointA.y == this.pointB.y && consistOf) {
+      return Math.min(this.pointA.x, this.pointB.x);
+    }
     if (this.hasPoint(newPoint)) {
       return x;
     }
-
     return NaN;
   }
 
   findY(other) {
     const slope = this.slope;
-    // const y = (other - this.pointA.y) / slope + this.pointA.x;
     const y = slope * (other - this.pointA.x) + this.pointA.y;
     const newPoint = new Point(other, y);
+    const consistOf = isBetween([this.pointA.x, this.pointB.x], other);
+    if (this.pointA.x == this.pointB.x && consistOf) {
+      return Math.min(this.pointA.y, this.pointB.y);
+    }
     if (this.hasPoint(newPoint)) {
       return y;
     }
 
     return NaN;
+  }
+  findPointFromStart(d) {
+    // (𝑥𝑡,𝑦𝑡)=(((1−𝑡)𝑥0+𝑡𝑥1),((1−𝑡)𝑦0+𝑡𝑦1))
+    // 𝑥𝑡 = ((1−𝑡)𝑥0+𝑡𝑥1)
+    // 𝑦𝑡 = ((1−𝑡)𝑦0+𝑡𝑦1)
+    if (d > this.length) {
+      return NaN;
+    }
+    const t = d / this.length;
+    const x = (1 - t) * this.pointA.x + t * this.pointB.x;
+    const y = (1 - t) * this.pointA.y + t * this.pointB.y;
+    return new Point(x, y);
   }
 }
 

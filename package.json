@@ -19,5 +19,8 @@
   "bugs": {
     "url": "https://github.com/step-batch-7/geometry-satheesh-chandran/issues"
   },
-  "homepage": "https://github.com/step-batch-7/geometry-satheesh-chandran#readme"
+  "homepage": "https://github.com/step-batch-7/geometry-satheesh-chandran#readme",
+  "devDependencies": {
+    "chai": "^4.2.0"
+  }
 }

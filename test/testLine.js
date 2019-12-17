@@ -1,4 +1,4 @@
-const assert = require('assert');
+const assert = require('chai').assert;
 const Line = require('../src/line');
 const Point = require('../src/point');
 
@@ -117,10 +117,19 @@ describe('Line Class', function() {
     it('should return the value of X if value of Y is given', function() {
       const a = new Line({ x: 1, y: 1 }, { x: 3, y: 3 });
       assert.deepStrictEqual(a.findX(2), 2);
+    });
+    it('should return the value of x when the line is parellel to y axis', function() {
       const b = new Line({ x: 1, y: 0 }, { x: 1, y: 5 });
       assert.deepStrictEqual(b.findX(5), 1);
       assert.deepStrictEqual(b.findX(0), 1);
+    });
+    it('should return NaN if the y value is out side the line', function() {
+      const b = new Line({ x: 1, y: 0 }, { x: 1, y: 5 });
       assert.deepStrictEqual(b.findX(6), NaN);
+    });
+    it('should return the value of x when the line is perpendicular to y axis', function() {
+      const b = new Line({ x: 0, y: 1 }, { x: 5, y: 1 });
+      assert.deepStrictEqual(b.findX(1), 0);
     });
   });
 
@@ -128,12 +137,36 @@ describe('Line Class', function() {
     it('should return the value of Y if value of X is given', function() {
       const a = new Line({ x: 1, y: 1 }, { x: 3, y: 3 });
       assert.deepStrictEqual(a.findY(2), 2);
+    });
+    it('should return the value of y when the line is parellel to x axis', function() {
       const b = new Line({ x: 0, y: 1 }, { x: 5, y: 1 });
       assert.deepStrictEqual(b.findY(5), 1);
       assert.deepStrictEqual(b.findY(0), 1);
+    });
+    it('should return NaN if the x value is out side the line', function() {
+      const b = new Line({ x: 0, y: 1 }, { x: 5, y: 1 });
       assert.deepStrictEqual(b.findY(6), NaN);
-      const c = new Line({ x: 1, y: 0 }, { x: 1, y: 5 });
-      // assert.deepStrictEqual(c.findY(1), 0);
+    });
+    it('should return the value of y when the line is perpendicular to x axis', function() {
+      const b = new Line({ x: 1, y: 0 }, { x: 1, y: 5 });
+      assert.deepStrictEqual(b.findY(1), 0);
+    });
+  });
+
+  describe('findPointFromStart', function() {
+    it('should return NaN if the distance is greater than the line length', function() {
+      const a = new Line({ x: 0, y: 1 }, { x: 5, y: 1 });
+      assert.deepStrictEqual(a.findPointFromStart(6), NaN);
+    });
+    it('should return the coordinates of points of given distance from the start', function() {
+      const a = new Line({ x: 0, y: 1 }, { x: 5, y: 1 });
+      const point = new Point(2, 1);
+      assert.deepStrictEqual(a.findPointFromStart(2), point);
+
+      const b = new Line({ x: 1, y: 1 }, { x: 5, y: 5 });
+      const p = new Point(2.4142, 2.4142);
+      assert.approximately(b.findPointFromStart(2).x, p.x, 0.0001);
+      assert.approximately(b.findPointFromStart(2).y, p.y, 0.0001);
     });
   });
 });

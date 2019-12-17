@@ -87,4 +87,20 @@ describe('circle', function() {
       assert.deepStrictEqual(c1.moveTo(point), c2);
     });
   });
+
+  describe('covers', function() {
+    it('should return true if the given point is covered by the circle', function() {
+      const c = new Circle({ x: 0, y: 0 }, 5);
+      const p = new Point(0, 5);
+      assert.ok(c.covers(p));
+      const circle = new Circle({ x: 0, y: 0 }, 5);
+      const point = new Point(0, 5);
+      assert.ok(circle.covers(point));
+    });
+    it('should return false if the given point is not covered by the circle', function() {
+      const c = new Circle({ x: 0, y: 0 }, 5);
+      const p = new Point(0, 6);
+      assert.isFalse(c.covers(p));
+    });
+  });
 });

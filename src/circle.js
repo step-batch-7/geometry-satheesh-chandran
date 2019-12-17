@@ -35,6 +35,14 @@ class Circle {
   moveTo(point) {
     return new Circle(point, this.r);
   }
+
+  covers(p) {
+    const x = p.x;
+    const y = p.y;
+    const g = this.o.x;
+    const h = this.o.y;
+    return (x - g) ** 2 + (y - h) ** 2 <= this.r ** 2;
+  }
 }
 
 module.exports = Circle;

@@ -19,6 +19,14 @@ class Circle {
   get perimeter() {
     return 2 * Math.PI * this.r;
   }
+
+  hasPoint(p) {
+    const x = p.x;
+    const y = p.y;
+    const g = this.o.x;
+    const h = this.o.y;
+    return (x - g) ** 2 + (y - h) ** 2 == this.r ** 2;
+  }
 }
 
 module.exports = Circle;

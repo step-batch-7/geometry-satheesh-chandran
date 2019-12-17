@@ -14,6 +14,10 @@ class Rectangle {
   get area() {
     return this.length * this.breadth;
   }
+
+  get perimeter() {
+    return 2 * (this.length + this.breadth);
+  }
 }
 
 module.exports = Rectangle;

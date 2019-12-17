@@ -16,4 +16,11 @@ describe('Rectangle', function() {
       assert.equal(r.area, 2);
     });
   });
+
+  describe('perimeter', function() {
+    it('should return the perimeter of the given rectangle', function() {
+      const r = new Rectangle({ x: 1, y: 1 }, { x: 2, y: 3 });
+      assert.equal(r.perimeter, 6);
+    });
+  });
 });

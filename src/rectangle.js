@@ -1,5 +1,9 @@
 const Line = require('./line');
 
+const isBetween = function(range, num) {
+  return range[0] <= num && range[1] >= num;
+};
+
 class Rectangle {
   constructor(end1, end2) {
     this.diagonal = new Line(
@@ -38,6 +42,35 @@ class Rectangle {
     const cd = new Line(this.diagonal.pointB, this.diagonal2.pointB);
     const da = new Line(this.diagonal2.pointB, this.diagonal.pointA);
     return ab.hasPoint(p) || bc.hasPoint(p) || cd.hasPoint(p) || da.hasPoint(p);
+  }
+
+  covers(p) {
+    const xMin = Math.min(
+      this.diagonal.pointA.x,
+      this.diagonal.pointB.x,
+      this.diagonal2.pointA.x,
+      this.diagonal2.pointB.x
+    );
+    const xMax = Math.max(
+      this.diagonal.pointA.x,
+      this.diagonal.pointB.x,
+      this.diagonal2.pointA.x,
+      this.diagonal2.pointB.x
+    );
+    const yMin = Math.min(
+      this.diagonal.pointA.y,
+      this.diagonal.pointB.y,
+      this.diagonal2.pointA.y,
+      this.diagonal2.pointB.y
+    );
+    const yMax = Math.max(
+      this.diagonal.pointA.y,
+      this.diagonal.pointB.y,
+      this.diagonal2.pointA.y,
+      this.diagonal2.pointB.y
+    );
+
+    return isBetween([xMin, xMax], p.x) && isBetween([yMin, yMax], p.y);
   }
 }
 

@@ -40,7 +40,7 @@ describe('Rectangle', function() {
 
   describe('hasPoint', function() {
     it('should return true if the circumference of the rectangle have the given point', function() {
-      const a = new Rectangle({ x: 1, y: 1 }, { x: 2, y: 3 });
+      const a = new Rectangle({ x: 2, y: 1 }, { x: 1, y: 3 });
       const p = new Point(1, 3);
       assert.ok(a.hasPoint(p));
     });
@@ -48,6 +48,23 @@ describe('Rectangle', function() {
       const a = new Rectangle({ x: 1, y: 1 }, { x: 2, y: 3 });
       const p = new Point(1, 4);
       assert.isFalse(a.hasPoint(p));
+    });
+  });
+
+  describe('covers', function() {
+    it('should return true if the rectangle covers the given point', function() {
+      const a = new Rectangle({ x: 1, y: 1 }, { x: 2, y: 3 });
+      const p = new Point(1.5, 2.5);
+      assert.ok(a.covers(p));
+
+      const rectangle = new Rectangle({ x: 1, y: 1 }, { x: 2, y: 3 });
+      const point = new Point(2, 3);
+      assert.ok(rectangle.covers(point));
+    });
+    it('should return false if the rectangle not covers the given point', function() {
+      const rectangle = new Rectangle({ x: 1, y: 1 }, { x: 2, y: 3 });
+      const point = new Point(2, 4);
+      assert.isFalse(rectangle.covers(point));
     });
   });
 });

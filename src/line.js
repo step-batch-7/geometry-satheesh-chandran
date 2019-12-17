@@ -54,7 +54,6 @@ class Line {
       { x: other.pointB.x, y: other.pointB.y }
     );
     return !collinearity && this.slope == other.slope;
-    // return this.slope == other.slope;
   }
 
   get midPoint() {

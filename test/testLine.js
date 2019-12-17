@@ -123,4 +123,17 @@ describe('Line Class', function() {
       assert.deepStrictEqual(b.findX(6), NaN);
     });
   });
+
+  describe('findY', function() {
+    it('should return the value of Y if value of X is given', function() {
+      const a = new Line({ x: 1, y: 1 }, { x: 3, y: 3 });
+      assert.deepStrictEqual(a.findY(2), 2);
+      const b = new Line({ x: 0, y: 1 }, { x: 5, y: 1 });
+      assert.deepStrictEqual(b.findY(5), 1);
+      assert.deepStrictEqual(b.findY(0), 1);
+      assert.deepStrictEqual(b.findY(6), NaN);
+      const c = new Line({ x: 1, y: 0 }, { x: 1, y: 5 });
+      // assert.deepStrictEqual(c.findY(1), 0);
+    });
+  });
 });

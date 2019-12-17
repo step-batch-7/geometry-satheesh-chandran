@@ -93,6 +93,18 @@ class Line {
 
     return NaN;
   }
+
+  findY(other) {
+    const slope = this.slope;
+    // const y = (other - this.pointA.y) / slope + this.pointA.x;
+    const y = slope * (other - this.pointA.x) + this.pointA.y;
+    const newPoint = new Point(other, y);
+    if (this.hasPoint(newPoint)) {
+      return y;
+    }
+
+    return NaN;
+  }
 }
 
 module.exports = Line;

@@ -123,6 +123,16 @@ class Line {
     const y = (1 - t) * this.pointA.y + t * this.pointB.y;
     return new Point(x, y);
   }
+
+  findPointFromEnd(d) {
+    if (d > this.length) {
+      return NaN;
+    }
+    const t = d / this.length;
+    const x = (1 - t) * this.pointB.x + t * this.pointA.x;
+    const y = (1 - t) * this.pointB.y + t * this.pointA.y;
+    return new Point(x, y);
+  }
 }
 
 module.exports = Line;

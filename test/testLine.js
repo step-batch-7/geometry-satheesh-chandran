@@ -169,4 +169,21 @@ describe('Line Class', function() {
       assert.approximately(b.findPointFromStart(2).y, p.y, 0.0001);
     });
   });
+
+  describe('findPointFromEnd', function() {
+    it('should return NaN if the distance is greater than the line length', function() {
+      const a = new Line({ x: 0, y: 1 }, { x: 5, y: 1 });
+      assert.deepStrictEqual(a.findPointFromEnd(6), NaN);
+    });
+    it('should return the coordinates of points of given distance from the start', function() {
+      const a = new Line({ x: 0, y: 1 }, { x: 5, y: 1 });
+      const point = new Point(3, 1);
+      assert.deepStrictEqual(a.findPointFromEnd(2), point);
+
+      const b = new Line({ x: 1, y: 1 }, { x: 5, y: 5 });
+      const p = new Point(3.5857, 3.5857);
+      assert.approximately(b.findPointFromEnd(2).x, p.x, 0.0001);
+      assert.approximately(b.findPointFromEnd(2).y, p.y, 0.0001);
+    });
+  });
 });

@@ -31,6 +31,10 @@ class Circle {
   isOn(c) {
     return c.hasPoint(this);
   }
+
+  moveTo(point) {
+    return new Circle(point, this.r);
+  }
 }
 
 module.exports = Circle;

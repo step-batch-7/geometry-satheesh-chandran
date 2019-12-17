@@ -78,4 +78,13 @@ describe('circle', function() {
       assert.isFalse(p.isOn(c));
     });
   });
+
+  describe('moveTo', function() {
+    it("should move the circle from it's orgin to given origin", function() {
+      const c1 = new Circle({ x: 0, y: 0 }, 5);
+      const point = { x: 1, y: 1 };
+      const c2 = new Circle({ x: 1, y: 1 }, 5);
+      assert.deepStrictEqual(c1.moveTo(point), c2);
+    });
+  });
 });

@@ -51,6 +51,8 @@ describe('Point Class', function() {
       const a = new Point(0, 1);
       const b = new Point(5, 1);
       assert.equal(a.findDistanceTo(b), 5);
+      const c = { x: 5, y: 1 };
+      assert.equal(a.findDistanceTo(c), 5);
     });
   });
 });

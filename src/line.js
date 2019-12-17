@@ -1,14 +1,12 @@
 const Point = require('./point');
 
 const isCollinear = function(firstPoint, secondPoint, thirdPoint) {
-  let firstLineLength = new Line(firstPoint, secondPoint).length;
-  let secondLineLength = new Line(thirdPoint, secondPoint).length;
-  let thirdLineLength = new Line(firstPoint, thirdPoint).length;
-  return (
-    firstLineLength + secondLineLength == thirdLineLength ||
-    firstLineLength + thirdLineLength == secondLineLength ||
-    thirdLineLength + secondLineLength == firstLineLength
-  );
+  //[x1(y2 - y3) + x2(y3 - y1) + x3(y1 - y2)] = 0;
+  const [x1, y1] = [firstPoint.x, firstPoint.y];
+  const [x2, y2] = [secondPoint.x, secondPoint.y];
+  const [x3, y3] = [thirdPoint.x, thirdPoint.y];
+  const collinearity = x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2) == 0;
+  return collinearity;
 };
 
 const isBetween = function(range, num) {
@@ -47,11 +45,18 @@ class Line {
     return yRange / xRange;
   }
   isParellel(other) {
-    if (!other instanceof Line) {
+    if (!(other instanceof Line)) {
       return false;
     }
-    return this.slope == other.slope;
+    const collinearity = isCollinear(
+      { x: this.pointA.x, y: this.pointA.y },
+      { x: this.pointB.x, y: this.pointB.y },
+      { x: other.pointB.x, y: other.pointB.y }
+    );
+    return !collinearity && this.slope == other.slope;
+    // return this.slope == other.slope;
   }
+
   get midPoint() {
     const xSum = this.pointB.x + this.pointA.x;
     const ySum = this.pointB.y + this.pointA.y;

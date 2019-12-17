@@ -2,7 +2,7 @@ const assert = require('chai').assert;
 const Rectangle = require('../src/rectangle');
 const Point = require('../src/point');
 
-describe('Rectangle', function() {
+describe.only('Rectangle', function() {
   describe('toString', function() {
     it('should return string format of the given rectangle', function() {
       const r = new Rectangle({ x: 1, y: 1 }, { x: 5, y: 4 });

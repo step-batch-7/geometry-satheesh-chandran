@@ -1,4 +1,5 @@
 const Line = require('./line');
+const Point = require('./point');
 
 const isBetween = function(range, num) {
   return range[0] <= num && range[1] >= num;
@@ -6,70 +7,57 @@ const isBetween = function(range, num) {
 
 class Rectangle {
   constructor(end1, end2) {
-    this.diagonal = new Line(
-      { x: end1.x, y: end1.y },
-      { x: end2.x, y: end2.y }
-    );
-    this.diagonal2 = new Line(
-      { x: end2.x, y: end1.y },
-      { x: end1.x, y: end2.y }
-    );
+    this.a = new Point(end1.x, end1.y);
+    this.c = new Point(end2.x, end2.y);
+    this.b = new Point(end2.x, end1.y);
+    this.d = new Point(end1.x, end2.y);
   }
 
   toString() {
-    return `[Rectangle (${this.diagonal.pointA.x},${this.diagonal.pointA.y}) to (${this.diagonal.pointB.x},${this.diagonal.pointB.y})]`;
+    return `[Rectangle (${this.a.x},${this.a.y}) to (${this.c.x},${this.c.y})]`;
   }
 
   get area() {
-    const length = Math.abs(this.diagonal.pointA.x - this.diagonal.pointB.x);
-    const breadth = Math.abs(this.diagonal.pointA.y - this.diagonal.pointB.y);
+    const length = Math.abs(this.a.x - this.c.x);
+    const breadth = Math.abs(this.a.y - this.c.y);
     return length * breadth;
   }
 
   get perimeter() {
-    const length = Math.abs(this.diagonal.pointA.x - this.diagonal.pointB.x);
-    const breadth = Math.abs(this.diagonal.pointA.y - this.diagonal.pointB.y);
+    const length = Math.abs(this.a.x - this.c.x);
+    const breadth = Math.abs(this.a.y - this.c.y);
     return 2 * (length + breadth);
   }
 
   isEqualTo(other) {
-    return this.diagonal.isEqualTo(other.diagonal);
+    const thisLine = new Line(
+      { x: this.a.x, y: this.a.y },
+      { x: this.c.x, y: this.c.y }
+    );
+    const otherLine = new Line(
+      { x: other.a.x, y: other.a.y },
+      { x: other.c.x, y: other.c.y }
+    );
+    return thisLine.isEqualTo(otherLine);
   }
 
   hasPoint(p) {
-    const ab = new Line(this.diagonal.pointA, this.diagonal2.pointA);
-    const bc = new Line(this.diagonal2.pointA, this.diagonal.pointB);
-    const cd = new Line(this.diagonal.pointB, this.diagonal2.pointB);
-    const da = new Line(this.diagonal2.pointB, this.diagonal.pointA);
+    // const b = new Point(this.c.x, this.a.y);
+    // const d = new Point(this.a.x, this.c.y);
+    const ab = new Line(this.a, this.b);
+    const bc = new Line(this.b, this.c);
+    const cd = new Line(this.c, this.d);
+    const da = new Line(this.d, this.a);
     return ab.hasPoint(p) || bc.hasPoint(p) || cd.hasPoint(p) || da.hasPoint(p);
   }
 
   covers(p) {
-    const xMin = Math.min(
-      this.diagonal.pointA.x,
-      this.diagonal.pointB.x,
-      this.diagonal2.pointA.x,
-      this.diagonal2.pointB.x
-    );
-    const xMax = Math.max(
-      this.diagonal.pointA.x,
-      this.diagonal.pointB.x,
-      this.diagonal2.pointA.x,
-      this.diagonal2.pointB.x
-    );
-    const yMin = Math.min(
-      this.diagonal.pointA.y,
-      this.diagonal.pointB.y,
-      this.diagonal2.pointA.y,
-      this.diagonal2.pointB.y
-    );
-    const yMax = Math.max(
-      this.diagonal.pointA.y,
-      this.diagonal.pointB.y,
-      this.diagonal2.pointA.y,
-      this.diagonal2.pointB.y
-    );
-
+    // const b = new Point(this.c.x, this.a.y);
+    // const d = new Point(this.a.x, this.c.y);
+    const xMin = Math.min(this.a.x, this.c.x, this.b.x, this.d.x);
+    const xMax = Math.max(this.a.x, this.c.x, this.b.x, this.d.x);
+    const yMin = Math.min(this.a.y, this.c.y, this.b.y, this.d.y);
+    const yMax = Math.max(this.a.y, this.c.y, this.b.y, this.d.y);
     return isBetween([xMin, xMax], p.x) && isBetween([yMin, yMax], p.y);
   }
 }

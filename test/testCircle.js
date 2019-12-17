@@ -96,11 +96,17 @@ describe('circle', function() {
       const circle = new Circle({ x: 0, y: 0 }, 5);
       const point = new Point(0, 5);
       assert.ok(circle.covers(point));
+      const a = new Circle({ x: 0, y: 0 }, 5);
+      const b = new Point(0, -5);
+      assert.ok(a.covers(b));
     });
     it('should return false if the given point is not covered by the circle', function() {
       const c = new Circle({ x: 0, y: 0 }, 5);
       const p = new Point(0, 6);
       assert.isFalse(c.covers(p));
+      const circle = new Circle({ x: 0, y: 0 }, 5);
+      const point = new Point(0, -6);
+      assert.isFalse(circle.covers(point));
     });
   });
 });

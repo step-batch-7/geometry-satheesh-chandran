@@ -37,4 +37,11 @@ describe('circle', function() {
       assert.isFalse(a.isEqualTo(b));
     });
   });
+
+  describe('area', function() {
+    it('should return area of a given circle', function() {
+      const a = new Circle({ x: 0, y: 0 }, 7);
+      assert.approximately(a.area, 153.938, 0.0001);
+    });
+  });
 });

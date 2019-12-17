@@ -11,6 +11,10 @@ class Circle {
   isEqualTo(other) {
     return this.o.isEqualTo(other.o) && this.r == other.r;
   }
+
+  get area() {
+    return Math.PI * this.r * this.r;
+  }
 }
 
 module.exports = Circle;

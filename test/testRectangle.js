@@ -9,4 +9,11 @@ describe('Rectangle', function() {
       assert.equal(r.toString(), expected);
     });
   });
+
+  describe('area', function() {
+    it('should return the area of the given rectangle', function() {
+      const r = new Rectangle({ x: 1, y: 1 }, { x: 2, y: 3 });
+      assert.equal(r.area, 2);
+    });
+  });
 });

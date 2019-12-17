@@ -10,6 +10,10 @@ class Rectangle {
   toString() {
     return `[Rectangle (${this.diagonal.pointA.x},${this.diagonal.pointA.y}) to (${this.diagonal.pointB.x},${this.diagonal.pointB.y})]`;
   }
+
+  get area() {
+    return this.length * this.breadth;
+  }
 }
 
 module.exports = Rectangle;

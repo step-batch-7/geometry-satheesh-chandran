@@ -2,7 +2,14 @@ const Line = require('./line');
 
 class Rectangle {
   constructor(end1, end2) {
-    this.diagonal = new Line(end1, end2);
+    this.diagonal = new Line(
+      { x: end1.x, y: end1.y },
+      { x: end2.x, y: end2.y }
+    );
+    this.diagonal2 = new Line(
+      { x: end2.x, y: end1.y },
+      { x: end1.x, y: end2.y }
+    );
   }
 
   toString() {
@@ -24,7 +31,14 @@ class Rectangle {
   isEqualTo(other) {
     return this.diagonal.isEqualTo(other.diagonal);
   }
+
+  hasPoint(p) {
+    const ab = new Line(this.diagonal.pointA, this.diagonal2.pointA);
+    const bc = new Line(this.diagonal2.pointA, this.diagonal.pointB);
+    const cd = new Line(this.diagonal.pointB, this.diagonal2.pointB);
+    const da = new Line(this.diagonal2.pointB, this.diagonal.pointA);
+    return ab.hasPoint(p) || bc.hasPoint(p) || cd.hasPoint(p) || da.hasPoint(p);
+  }
 }
 
-console.log(new Rectangle({ x: 1, y: 1 }, { x: 5, y: 4 }));
 module.exports = Rectangle;

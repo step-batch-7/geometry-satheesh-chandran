@@ -1,5 +1,6 @@
 const assert = require('chai').assert;
 const Rectangle = require('../src/rectangle');
+const Point = require('../src/point');
 
 describe('Rectangle', function() {
   describe('toString', function() {
@@ -34,6 +35,19 @@ describe('Rectangle', function() {
       const a = new Rectangle({ x: 1, y: 1 }, { x: 3, y: 3 });
       const b = new Rectangle({ x: 1, y: 1 }, { x: 2, y: 3 });
       assert.isFalse(a.isEqualTo(b));
+    });
+  });
+
+  describe('hasPoint', function() {
+    it('should return true if the circumference of the rectangle have the given point', function() {
+      const a = new Rectangle({ x: 1, y: 1 }, { x: 2, y: 3 });
+      const p = new Point(1, 3);
+      assert.ok(a.hasPoint(p));
+    });
+    it('should return false if the circumference of the rectangle not have the given point', function() {
+      const a = new Rectangle({ x: 1, y: 1 }, { x: 2, y: 3 });
+      const p = new Point(1, 4);
+      assert.isFalse(a.hasPoint(p));
     });
   });
 });

@@ -1,13 +1,26 @@
-const isPointsEqual = function(pointA, pointB) {
-  return pointA.x == pointB.x && pointA.y == pointB.y;
+const Point = require('./point');
+
+const isCollinear = function(firstPoint, secondPoint, thirdPoint) {
+  let firstLineLength = new Line(firstPoint, secondPoint).length;
+  let secondLineLength = new Line(thirdPoint, secondPoint).length;
+  let thirdLineLength = new Line(firstPoint, thirdPoint).length;
+  return (
+    firstLineLength + secondLineLength == thirdLineLength ||
+    firstLineLength + thirdLineLength == secondLineLength ||
+    thirdLineLength + secondLineLength == firstLineLength
+  );
+};
+
+const isBetween = function(range, num) {
+  return (
+    (num >= range[0] && num <= range[1]) || (num <= range[0] && num >= range[1])
+  );
 };
 
 class Line {
   constructor(a, b) {
-    [this.pointA, this.pointB] = [
-      { x: a.x, y: a.y },
-      { x: b.x, y: b.y }
-    ];
+    this.pointA = new Point(a.x, a.y);
+    this.pointB = new Point(b.x, b.y);
   }
   toString() {
     return `[Line (${this.pointA.x},${this.pointA.y}) to (${this.pointB.x},${this.pointB.y})]`;
@@ -15,8 +28,10 @@ class Line {
   isEqualTo(other) {
     if (other instanceof Line) {
       return (
-        isPointsEqual(this.pointA, other.pointA) &&
-        isPointsEqual(this.pointB, other.pointB)
+        (this.pointA.isEqualTo(other.pointA) &&
+          this.pointB.isEqualTo(other.pointB)) ||
+        (this.pointA.isEqualTo(other.pointB) &&
+          this.pointB.isEqualTo(other.pointA))
       );
     }
     return false;
@@ -55,14 +70,28 @@ class Line {
     return [firstLine, secondLine];
   }
   hasPoint(p) {
-    const tanQ = this.slope;
-    return (p.y - this.pointA.y) / (p.x - this.pointA.x) == tanQ;
+    const xRange = [this.pointB.x, this.pointA.x];
+    const yRange = [this.pointB.y, this.pointA.y];
+    const collinearity = isCollinear(
+      { x: this.pointA.x, y: this.pointA.y },
+      { x: this.pointB.x, y: this.pointB.y },
+      {
+        x: p.x,
+        y: p.y
+      }
+    );
+    return collinearity && isBetween(xRange, p.x) && isBetween(yRange, p.y);
   }
+
   findX(other) {
     const slope = this.slope;
-    // const length = this.length;
     const x = (other - this.pointA.y) / slope + this.pointA.x;
-    return x;
+    const newPoint = new Point(x, other);
+    if (this.hasPoint(newPoint)) {
+      return x;
+    }
+
+    return NaN;
   }
 }
 

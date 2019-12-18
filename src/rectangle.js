@@ -28,6 +28,9 @@ class Rectangle {
   }
 
   isEqualTo(other) {
+    if (!(other instanceof Rectangle)) {
+      return false;
+    }
     const thisLine = new Line(
       { x: this.a.x, y: this.a.y },
       { x: this.c.x, y: this.c.y }

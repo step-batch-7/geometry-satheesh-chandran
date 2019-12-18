@@ -94,7 +94,7 @@ class Line {
     const newPoint = new Point(x, other);
     const consistOf = isBetween([this.pointA.y, this.pointB.y], other);
     if (this.pointA.y == this.pointB.y && consistOf) {
-      return Math.min(this.pointA.x, this.pointB.x);
+      return this.pointA.x;
     }
     if (this.hasPoint(newPoint)) {
       return x;
@@ -108,7 +108,7 @@ class Line {
     const newPoint = new Point(other, y);
     const consistOf = isBetween([this.pointA.x, this.pointB.x], other);
     if (this.pointA.x == this.pointB.x && consistOf) {
-      return Math.min(this.pointA.y, this.pointB.y);
+      return this.pointA.y;
     }
     if (this.hasPoint(newPoint)) {
       return y;
@@ -118,10 +118,11 @@ class Line {
   }
   findPointFromStart(d) {
     // (𝑥𝑡,𝑦𝑡)=(((1−𝑡)𝑥0+𝑡𝑥1),((1−𝑡)𝑦0+𝑡𝑦1))
-    // 𝑥𝑡 = ((1−𝑡)𝑥0+𝑡𝑥1)
-    // 𝑦𝑡 = ((1−𝑡)𝑦0+𝑡𝑦1)
     if (d > this.length) {
-      return NaN;
+      return null;
+    }
+    if (!(typeof d == 'number') || d < 0) {
+      return null;
     }
     const t = d / this.length;
     const x = (1 - t) * this.pointA.x + t * this.pointB.x;
@@ -131,7 +132,10 @@ class Line {
 
   findPointFromEnd(d) {
     if (d > this.length) {
-      return NaN;
+      return null;
+    }
+    if (!(typeof d == 'number') || d < 0) {
+      return null;
     }
     const t = d / this.length;
     const x = (1 - t) * this.pointB.x + t * this.pointA.x;

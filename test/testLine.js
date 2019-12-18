@@ -145,9 +145,8 @@ describe('Line Class', function() {
       assert.deepStrictEqual(a.findY(2), 2);
     });
     it('should return the value of y when the line is parellel to x axis', function() {
-      const b = new Line({ x: 0, y: 1 }, { x: 5, y: 1 });
-      assert.deepStrictEqual(b.findY(5), 1);
-      assert.deepStrictEqual(b.findY(0), 1);
+      const b = new Line({ x: 1, y: 5 }, { x: 1, y: -1 });
+      assert.deepStrictEqual(b.findY(1), 5);
     });
     it('should return NaN if the x value is out side the line', function() {
       const b = new Line({ x: 0, y: 1 }, { x: 5, y: 1 });
@@ -162,7 +161,7 @@ describe('Line Class', function() {
   describe('findPointFromStart', function() {
     it('should return NaN if the distance is greater than the line length', function() {
       const a = new Line({ x: 0, y: 1 }, { x: 5, y: 1 });
-      assert.deepStrictEqual(a.findPointFromStart(6), NaN);
+      assert.isNull(a.findPointFromStart(6));
     });
     it('should return the coordinates of points of given distance from the start', function() {
       const a = new Line({ x: 0, y: 1 }, { x: 5, y: 1 });
@@ -174,12 +173,20 @@ describe('Line Class', function() {
       assert.approximately(b.findPointFromStart(2).x, p.x, 0.0001);
       assert.approximately(b.findPointFromStart(2).y, p.y, 0.0001);
     });
+    it('should return null if the distance is not a number', function() {
+      const a = new Line({ x: 0, y: 1 }, { x: 5, y: 1 });
+      assert.isNull(a.findPointFromStart('d'));
+    });
+    it('should return null if the distance is less than zero', function() {
+      const a = new Line({ x: 0, y: 1 }, { x: 5, y: 1 });
+      assert.isNull(a.findPointFromStart(-3));
+    });
   });
 
   describe('findPointFromEnd', function() {
     it('should return NaN if the distance is greater than the line length', function() {
       const a = new Line({ x: 0, y: 1 }, { x: 5, y: 1 });
-      assert.deepStrictEqual(a.findPointFromEnd(6), NaN);
+      assert.isNull(a.findPointFromEnd(6));
     });
     it('should return the coordinates of points of given distance from the start', function() {
       const a = new Line({ x: 0, y: 1 }, { x: 5, y: 1 });
@@ -190,6 +197,14 @@ describe('Line Class', function() {
       const p = new Point(3.5857, 3.5857);
       assert.approximately(b.findPointFromEnd(2).x, p.x, 0.0001);
       assert.approximately(b.findPointFromEnd(2).y, p.y, 0.0001);
+    });
+    it('should return null if the distance is not a number', function() {
+      const a = new Line({ x: 0, y: 1 }, { x: 5, y: 1 });
+      assert.isNull(a.findPointFromEnd('d'));
+    });
+    it('should return null if the distance is less than zero', function() {
+      const a = new Line({ x: 0, y: 1 }, { x: 5, y: 1 });
+      assert.isNull(a.findPointFromEnd(-3));
     });
   });
 });

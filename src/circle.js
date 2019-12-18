@@ -32,10 +32,6 @@ class Circle {
     return (x - g) ** 2 + (y - h) ** 2 == this.r ** 2;
   }
 
-  isOn(c) {
-    return c.hasPoint(this);
-  }
-
   moveTo(point) {
     return new Circle(point, this.r);
   }

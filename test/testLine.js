@@ -74,6 +74,11 @@ describe('Line Class', function() {
       const b = new Line({ x: 3, y: 3 }, { x: 5, y: 5 });
       assert.isFalse(a.isParallelTo(b));
     });
+    it('should give true if both lines are parallel to Y-axis and slope is in negative', function() {
+      const a = new Line({ x: 0, y: 0 }, { x: 0, y: 5 });
+      const b = new Line({ x: 1, y: -1 }, { x: 1, y: 5 });
+      assert.ok(a.isParallelTo(b));
+    });
   });
 
   describe('split', function() {
@@ -109,6 +114,11 @@ describe('Line Class', function() {
       const q = new Point(4, 4);
       const b = new Line({ x: 1, y: 1 }, { x: 3, y: 3 });
       assert.ok(!b.hasPoint(q));
+    });
+    it('should return false if the point is not an instance of Point class', function() {
+      const p = { x: 2, y: 2 };
+      const a = new Line({ x: 1, y: 1 }, { x: 3, y: 3 });
+      assert.isFalse(a.hasPoint(p));
     });
   });
 

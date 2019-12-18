@@ -61,7 +61,14 @@ class Line {
       { x: this.pointB.x, y: this.pointB.y },
       { x: other.pointB.x, y: other.pointB.y }
     );
-    return !collinearity && this.slope == other.slope;
+    let thisSlope;
+    let otherSlope;
+    this.slope == -Infinity ? (thisSlope = Infinity) : (thisSlope = this.slope);
+    other.slope == -Infinity
+      ? (otherSlope = Infinity)
+      : (otherSlope = other.slope);
+    const slopeEquality = thisSlope == otherSlope;
+    return !collinearity && slopeEquality;
   }
 
   split() {

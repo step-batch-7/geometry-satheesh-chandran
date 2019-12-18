@@ -87,5 +87,10 @@ describe('Rectangle', function() {
       const point = new Point(2, 3);
       assert.isFalse(rectangle.covers(point));
     });
+    it('should return false if given point is not an instance of Point class', function() {
+      const a = new Rectangle({ x: 1, y: 1 }, { x: 2, y: 3 });
+      const p = { x: 1.5, y: 2.5 };
+      assert.isFalse(a.covers(p));
+    });
   });
 });

@@ -2,7 +2,7 @@ const Line = require('./line');
 const Point = require('./point');
 
 const isBetween = function(range, num) {
-  return range[0] <= num && range[1] >= num;
+  return range[0] < num && range[1] > num;
 };
 
 class Rectangle {
@@ -40,6 +40,9 @@ class Rectangle {
   }
 
   hasPoint(p) {
+    if (!(p instanceof Point)) {
+      return false;
+    }
     const b = new Point(this.c.x, this.a.y);
     const d = new Point(this.a.x, this.c.y);
     const ab = new Line(this.a, { x: b.x, y: b.y });
@@ -50,6 +53,9 @@ class Rectangle {
   }
 
   covers(p) {
+    if (!(p instanceof Point)) {
+      return false;
+    }
     const b = new Point(this.c.x, this.a.y);
     const d = new Point(this.a.x, this.c.y);
     const xMin = Math.min(this.a.x, this.c.x, b.x, d.x);

@@ -75,6 +75,9 @@ class Line {
     return [firstLine, secondLine];
   }
   hasPoint(p) {
+    if (!(p instanceof Point)) {
+      return false;
+    }
     const xRange = [this.pointB.x, this.pointA.x];
     const yRange = [this.pointB.y, this.pointA.y];
     const collinearity = isCollinear(

@@ -49,6 +49,11 @@ describe('Rectangle', function() {
       const p = new Point(1, 4);
       assert.isFalse(a.hasPoint(p));
     });
+    it('should return false if the given point is not an instance of point', function() {
+      const a = new Rectangle({ x: 1, y: 1 }, { x: 2, y: 3 });
+      const p = { x: 1, y: 3 };
+      assert.isFalse(a.hasPoint(p));
+    });
   });
 
   describe('covers', function() {
@@ -56,14 +61,20 @@ describe('Rectangle', function() {
       const a = new Rectangle({ x: 1, y: 1 }, { x: 2, y: 3 });
       const p = new Point(1.5, 2.5);
       assert.ok(a.covers(p));
-
-      const rectangle = new Rectangle({ x: 1, y: 1 }, { x: 2, y: 3 });
-      const point = new Point(2, 3);
-      assert.ok(rectangle.covers(point));
     });
     it('should return false if the rectangle not covers the given point', function() {
       const rectangle = new Rectangle({ x: 1, y: 1 }, { x: 2, y: 3 });
       const point = new Point(2, 4);
+      assert.isFalse(rectangle.covers(point));
+    });
+    it('should return false if the given point is not an instance of point', function() {
+      const a = new Rectangle({ x: 1, y: 1 }, { x: 2, y: 3 });
+      const p = { x: 1, y: 3 };
+      assert.isFalse(a.hasPoint(p));
+    });
+    it('should return false if the given point lies in the circumference of the rectangle', function() {
+      const rectangle = new Rectangle({ x: 1, y: 1 }, { x: 2, y: 3 });
+      const point = new Point(2, 3);
       assert.isFalse(rectangle.covers(point));
     });
   });

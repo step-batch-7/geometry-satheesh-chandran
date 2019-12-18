@@ -4,6 +4,7 @@ class Circle {
   constructor(a, b) {
     this.o = new Point(a.x, a.y);
     this.r = b;
+    Object.freeze(this);
   }
   toString() {
     return `[Circle @(${this.o.x},${this.o.y}) radius ${this.r}]`;

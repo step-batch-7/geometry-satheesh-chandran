@@ -1,11 +1,15 @@
 class Point {
   constructor(x, y) {
     [this.x, this.y] = [x, y];
+    Object.freeze(this);
   }
   toString() {
     return `[Point @(${this.x},${this.y})]`;
   }
   visit(other) {
+    if (typeof other !== 'function') {
+      return undefined;
+    }
     return other(this.x, this.y);
   }
   isEqualTo(other) {

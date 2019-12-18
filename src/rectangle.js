@@ -9,6 +9,7 @@ class Rectangle {
   constructor(end1, end2) {
     this.a = new Point(end1.x, end1.y);
     this.c = new Point(end2.x, end2.y);
+    Object.freeze(this);
   }
 
   toString() {
@@ -31,9 +32,13 @@ class Rectangle {
     if (!(other instanceof Rectangle)) {
       return false;
     }
+    const b = new Point(this.c.x, this.a.y);
+    const d = new Point(this.a.x, this.c.y);
     const equality =
       (this.a.isEqualTo(other.a) && this.c.isEqualTo(other.c)) ||
-      (this.a.isEqualTo(other.c) && this.c.isEqualTo(other.a));
+      (this.a.isEqualTo(other.c) && this.c.isEqualTo(other.a)) ||
+      (other.a.isEqualTo(b) && other.c.isEqualTo(d)) ||
+      (other.a.isEqualTo(d) && other.c.isEqualTo(b));
     return equality;
   }
 

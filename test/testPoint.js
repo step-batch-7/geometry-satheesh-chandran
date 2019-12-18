@@ -23,6 +23,10 @@ describe('Point Class', function() {
         6
       );
     });
+    it("should return undefined if 'other' is not a function", function() {
+      const a = new Point(2, 3);
+      assert.isUndefined(a.visit(6));
+    });
   });
   describe('isEqualTo', function() {
     it('should give true if the given to points are equal', function() {
@@ -86,6 +90,16 @@ describe('Point Class', function() {
       const circle = new Circle({ x: 0, y: 0 }, 5);
       const point = new Point(0, 6);
       assert.isFalse(point.isOn(circle));
+    });
+  });
+
+  describe('notEditable', function() {
+    it('co-ordinates of the point should not be editable', function() {
+      const point = new Point(4, 5);
+      point.x = 45;
+      point.y = 454;
+      const expectedValue = new Point(4, 5);
+      assert.deepStrictEqual(point, expectedValue);
     });
   });
 });

@@ -31,6 +31,11 @@ describe('Rectangle', function() {
       const b = new Rectangle({ x: 1, y: 1 }, { x: 2, y: 3 });
       assert.ok(a.isEqualTo(b));
     });
+    it('should return true if given equal rectangles and given with opposite diagonal points', function() {
+      const a = new Rectangle({ x: 1, y: 1 }, { x: 2, y: 3 });
+      const b = new Rectangle({ x: 2, y: 1 }, { x: 1, y: 3 });
+      assert.ok(a.isEqualTo(b));
+    });
     it('should return true if the given rectangles are equal', function() {
       const a = new Rectangle({ x: 1, y: 1 }, { x: 3, y: 3 });
       const b = new Rectangle({ x: 1, y: 1 }, { x: 2, y: 3 });

@@ -25,6 +25,7 @@ class Line {
   constructor(a, b) {
     this.pointA = new Point(a.x, a.y);
     this.pointB = new Point(b.x, b.y);
+    Object.freeze(this);
   }
   toString() {
     return `[Line (${this.pointA.x},${this.pointA.y}) to (${this.pointB.x},${this.pointB.y})]`;

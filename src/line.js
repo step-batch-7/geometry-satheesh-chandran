@@ -42,9 +42,10 @@ class Line {
   get slope() {
     const xRange = this.pointB.x - this.pointA.x;
     const yRange = this.pointB.y - this.pointA.y;
-    return yRange / xRange;
+    const slope = yRange / xRange;
+    return slope;
   }
-  isParellel(other) {
+  isParallelTo(other) {
     if (!(other instanceof Line)) {
       return false;
     }

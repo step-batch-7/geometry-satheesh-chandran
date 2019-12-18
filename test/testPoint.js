@@ -1,6 +1,7 @@
 const assert = require('chai').assert;
 const Point = require('../src/point');
 const Line = require('../src/line');
+const Circle = require('../src/circle');
 
 describe('Point Class', function() {
   describe('toString', function() {
@@ -52,8 +53,11 @@ describe('Point Class', function() {
       const a = new Point(0, 1);
       const b = new Point(5, 1);
       assert.equal(a.findDistanceTo(b), 5);
-      const c = { x: 5, y: 1 };
-      assert.equal(a.findDistanceTo(c), 5);
+    });
+    it('should give NaN when the given point is not an instance of Point', function() {
+      const point1 = new Point(1, 2);
+      const point2 = { x: 3, y: 3 };
+      assert.isNaN(point1.findDistanceTo(point2));
     });
   });
 
@@ -67,6 +71,21 @@ describe('Point Class', function() {
       const point = new Point(4, 4);
       const line = new Line({ x: 1, y: 1 }, { x: 3, y: 3 });
       assert.isFalse(point.isOn(line));
+    });
+    it('should validate a point that is on the circumference of circle and on the x axis', () => {
+      const circle = new Circle({ x: 0, y: 0 }, 5);
+      const point = new Point(5, 0);
+      assert.isTrue(point.isOn(circle));
+    });
+    it('should validate a point that is on the circumference of circle and on the y axis', () => {
+      const circle = new Circle({ x: 0, y: 0 }, 5);
+      const point = new Point(0, 5);
+      assert.isTrue(point.isOn(circle));
+    });
+    it('should invalidate a point that is not on the circumference of circle', () => {
+      const circle = new Circle({ x: 0, y: 0 }, 5);
+      const point = new Point(0, 6);
+      assert.isFalse(point.isOn(circle));
     });
   });
 });

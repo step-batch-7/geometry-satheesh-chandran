@@ -50,16 +50,16 @@ describe('Line Class', function() {
     });
   });
 
-  describe('isParellel', function() {
+  describe('isParallelTo', function() {
     it('should give true if two given lines are parellel ', function() {
       const a = new Line({ x: 1, y: 3 }, { x: 3, y: 5 });
       const b = new Line({ x: 1, y: 4 }, { x: 2, y: 5 });
-      assert.ok(a.isParellel(b));
+      assert.ok(a.isParallelTo(b));
     });
     it('should give false if two given lines are parellel ', function() {
       const a = new Line({ x: 1, y: 3 }, { x: 3, y: 5 });
       const b = new Line({ x: 1, y: 2 }, { x: 2, y: 5 });
-      assert.isFalse(a.isParellel(b));
+      assert.isFalse(a.isParallelTo(b));
     });
     it('should give false if other argument is not an instance of Line', function() {
       const a = new Line({ x: 1, y: 3 }, { x: 3, y: 5 });
@@ -67,12 +67,12 @@ describe('Line Class', function() {
         { x: 1, y: 2 },
         { x: 2, y: 5 }
       ];
-      assert.equal(a.isParellel(b), false);
+      assert.isFalse(a.isParallelTo(b));
     });
     it('should return false if the two lines are overlapping', function() {
       const a = new Line({ x: 1, y: 1 }, { x: 2, y: 2 });
       const b = new Line({ x: 3, y: 3 }, { x: 5, y: 5 });
-      assert.isFalse(a.isParellel(b));
+      assert.isFalse(a.isParallelTo(b));
     });
   });
 

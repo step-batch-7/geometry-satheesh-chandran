@@ -19,6 +19,9 @@ class Point {
   }
 
   findDistanceTo(other) {
+    if (!(other instanceof Point)) {
+      return NaN;
+    }
     const xRange = this.x - other.x;
     const yRange = this.y - other.y;
     return Math.sqrt(xRange * xRange + yRange * yRange);

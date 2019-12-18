@@ -15,6 +15,12 @@ const isBetween = function(range, num) {
   );
 };
 
+const midPoint = function(pointA, pointB) {
+  const xSum = pointB.x + pointA.x;
+  const ySum = pointB.y + pointA.y;
+  return [xSum / 2, ySum / 2];
+};
+
 class Line {
   constructor(a, b) {
     this.pointA = new Point(a.x, a.y);
@@ -57,13 +63,8 @@ class Line {
     return !collinearity && this.slope == other.slope;
   }
 
-  get midPoint() {
-    const xSum = this.pointB.x + this.pointA.x;
-    const ySum = this.pointB.y + this.pointA.y;
-    return [xSum / 2, ySum / 2];
-  }
   split() {
-    const middle = this.midPoint;
+    const middle = midPoint(this.pointA, this.pointB);
     const firstLine = new Line(
       { x: this.pointA.x, y: this.pointA.y },
       { x: middle[0], y: middle[1] }

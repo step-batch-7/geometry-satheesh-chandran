@@ -76,13 +76,6 @@ describe('Line Class', function() {
     });
   });
 
-  describe('midPoint', function() {
-    it('should give the mid point of the given line', function() {
-      const a = new Line({ x: -3, y: 5 }, { x: 8, y: -1 });
-      assert.deepStrictEqual(a.midPoint, [2.5, 2]);
-    });
-  });
-
   describe('split', function() {
     it('should split the given line from the middle of the given line', function() {
       const a = new Line({ x: -3, y: 5 }, { x: 8, y: -1 });

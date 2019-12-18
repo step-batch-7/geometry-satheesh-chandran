@@ -31,15 +31,10 @@ class Rectangle {
     if (!(other instanceof Rectangle)) {
       return false;
     }
-    const thisLine = new Line(
-      { x: this.a.x, y: this.a.y },
-      { x: this.c.x, y: this.c.y }
-    );
-    const otherLine = new Line(
-      { x: other.a.x, y: other.a.y },
-      { x: other.c.x, y: other.c.y }
-    );
-    return thisLine.isEqualTo(otherLine);
+    const equality =
+      (this.a.isEqualTo(other.a) && this.c.isEqualTo(other.c)) ||
+      (this.a.isEqualTo(other.c) && this.c.isEqualTo(other.a));
+    return equality;
   }
 
   hasPoint(p) {

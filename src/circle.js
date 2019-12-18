@@ -21,6 +21,9 @@ class Circle {
   }
 
   hasPoint(p) {
+    if (!(p instanceof Point)) {
+      return false;
+    }
     const x = p.x;
     const y = p.y;
     const g = this.o.x;
@@ -37,11 +40,14 @@ class Circle {
   }
 
   covers(p) {
+    if (!(p instanceof Point)) {
+      return false;
+    }
     const x = p.x;
     const y = p.y;
     const g = this.o.x;
     const h = this.o.y;
-    return (x - g) ** 2 + (y - h) ** 2 <= this.r ** 2;
+    return (x - g) ** 2 + (y - h) ** 2 < this.r ** 2;
   }
 }
 

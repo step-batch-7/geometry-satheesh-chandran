@@ -64,6 +64,11 @@ describe('circle', function() {
       const p = new Point(0, 6);
       assert.isFalse(c.hasPoint(p));
     });
+    it('should return false if the given point is not an instanceof Point', function() {
+      const c = new Circle({ x: 0, y: 0 }, 5);
+      const p = { x: 0, y: 5 };
+      assert.isFalse(c.hasPoint(p));
+    });
   });
 
   describe('isOn', function() {
@@ -91,13 +96,10 @@ describe('circle', function() {
   describe('covers', function() {
     it('should return true if the given point is covered by the circle', function() {
       const c = new Circle({ x: 0, y: 0 }, 5);
-      const p = new Point(0, 5);
+      const p = new Point(0, 4);
       assert.ok(c.covers(p));
-      const circle = new Circle({ x: 0, y: 0 }, 5);
-      const point = new Point(0, 5);
-      assert.ok(circle.covers(point));
       const a = new Circle({ x: 0, y: 0 }, 5);
-      const b = new Point(0, -5);
+      const b = new Point(1, -3);
       assert.ok(a.covers(b));
     });
     it('should return false if the given point is not covered by the circle', function() {
@@ -107,6 +109,16 @@ describe('circle', function() {
       const circle = new Circle({ x: 0, y: 0 }, 5);
       const point = new Point(0, -6);
       assert.isFalse(circle.covers(point));
+    });
+    it('should return false if the given point is lies on the circumference', function() {
+      const c = new Circle({ x: 0, y: 0 }, 5);
+      const p = new Point(0, 5);
+      assert.isFalse(c.covers(p));
+    });
+    it('should return false if the given point is not an instanceof Point', function() {
+      const c = new Circle({ x: 0, y: 0 }, 5);
+      const p = { x: 0, y: 1 };
+      assert.isFalse(c.covers(p));
     });
   });
 });

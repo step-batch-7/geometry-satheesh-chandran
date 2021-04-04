@@ -1,6 +1,6 @@
 const Point = require('./point');
 
-const isCollinear = function(firstPoint, secondPoint, thirdPoint) {
+const isCollinear = function (firstPoint, secondPoint, thirdPoint) {
   //[x1(y2 - y3) + x2(y3 - y1) + x3(y1 - y2)] = 0;
   const [x1, y1] = [firstPoint.x, firstPoint.y];
   const [x2, y2] = [secondPoint.x, secondPoint.y];
@@ -9,13 +9,13 @@ const isCollinear = function(firstPoint, secondPoint, thirdPoint) {
   return collinearity;
 };
 
-const isBetween = function(range, num) {
+const isBetween = function (range, num) {
   return (
     (num >= range[0] && num <= range[1]) || (num <= range[0] && num >= range[1])
   );
 };
 
-const midPoint = function(pointA, pointB) {
+const midPoint = function (pointA, pointB) {
   const xSum = pointB.x + pointA.x;
   const ySum = pointB.y + pointA.y;
   return [xSum / 2, ySum / 2];
@@ -28,27 +28,25 @@ class Line {
     Object.freeze(this);
   }
   toString() {
-    return `[Line (${this.pointA.x},${this.pointA.y}) to (${this.pointB.x},${this.pointB.y})]`;
+    return `[Line (${this.pointA.points.x},${this.pointA.points.y}) to (${this.pointB.points.x},${this.pointB.points.y})]`;
   }
   isEqualTo(other) {
-    if (other instanceof Line) {
-      return (
-        (this.pointA.isEqualTo(other.pointA) &&
-          this.pointB.isEqualTo(other.pointB)) ||
-        (this.pointA.isEqualTo(other.pointB) &&
-          this.pointB.isEqualTo(other.pointA))
-      );
-    }
-    return false;
+    return (
+      (other instanceof Line &&
+        this.pointA.isEqualTo(other.pointA) &&
+        this.pointB.isEqualTo(other.pointB)) ||
+      (this.pointA.isEqualTo(other.pointB) &&
+        this.pointB.isEqualTo(other.pointA))
+    );
   }
   get length() {
-    const xRange = this.pointB.x - this.pointA.x;
-    const yRange = this.pointB.y - this.pointA.y;
+    const xRange = this.pointB.points.x - this.pointA.points.x;
+    const yRange = this.pointB.points.y - this.pointA.points.y;
     return Math.sqrt(xRange * xRange + yRange * yRange);
   }
   get slope() {
-    const xRange = this.pointB.x - this.pointA.x;
-    const yRange = this.pointB.y - this.pointA.y;
+    const xRange = this.pointB.points.x - this.pointA.points.x;
+    const yRange = this.pointB.points.y - this.pointA.points.y;
     const slope = yRange / xRange;
     return slope;
   }
@@ -57,16 +55,12 @@ class Line {
       return false;
     }
     const collinearity = isCollinear(
-      { x: this.pointA.x, y: this.pointA.y },
-      { x: this.pointB.x, y: this.pointB.y },
-      { x: other.pointB.x, y: other.pointB.y }
+      { x: this.pointA.points.x, y: this.pointA.points.y },
+      { x: this.pointB.points.x, y: this.pointB.points.y },
+      { x: other.pointB.points.x, y: other.pointB.points.y }
     );
-    let thisSlope;
-    let otherSlope;
-    this.slope == -Infinity ? (thisSlope = Infinity) : (thisSlope = this.slope);
-    other.slope == -Infinity
-      ? (otherSlope = Infinity)
-      : (otherSlope = other.slope);
+    const thisSlope = this.slope == -Infinity ? Infinity : this.slope;
+    const otherSlope = other.slope == -Infinity ? Infinity : other.slope;
     const slopeEquality = thisSlope == otherSlope;
     return !collinearity && slopeEquality;
   }
@@ -83,30 +77,34 @@ class Line {
     );
     return [firstLine, secondLine];
   }
-  hasPoint(p) {
-    if (!(p instanceof Point)) {
+  hasPoint(point) {
+    if (!(point instanceof Point)) {
       return false;
     }
-    const xRange = [this.pointB.x, this.pointA.x];
-    const yRange = [this.pointB.y, this.pointA.y];
+    const xRange = [this.pointB.points.x, this.pointA.points.x];
+    const yRange = [this.pointB.points.y, this.pointA.points.y];
     const collinearity = isCollinear(
-      { x: this.pointA.x, y: this.pointA.y },
-      { x: this.pointB.x, y: this.pointB.y },
-      {
-        x: p.x,
-        y: p.y
-      }
+      { x: this.pointA.points.x, y: this.pointA.points.y },
+      { x: this.pointB.points.x, y: this.pointB.points.y },
+      { x: point.points.x, y: point.points.y }
     );
-    return collinearity && isBetween(xRange, p.x) && isBetween(yRange, p.y);
+    return (
+      collinearity &&
+      isBetween(xRange, point.points.x) &&
+      isBetween(yRange, point.points.y)
+    );
   }
 
   findX(other) {
     const slope = this.slope;
-    const x = (other - this.pointA.y) / slope + this.pointA.x;
+    const x = (other - this.pointA.points.y) / slope + this.pointA.points.x;
     const newPoint = new Point(x, other);
-    const consistOf = isBetween([this.pointA.y, this.pointB.y], other);
-    if (this.pointA.y == this.pointB.y && consistOf) {
-      return this.pointA.x;
+    const consistOf = isBetween(
+      [this.pointA.points.y, this.pointB.points.y],
+      other
+    );
+    if (this.pointA.points.y == this.pointB.points.y && consistOf) {
+      return this.pointA.points.x;
     }
     if (this.hasPoint(newPoint)) {
       return x;
@@ -116,11 +114,11 @@ class Line {
 
   findY(other) {
     const slope = this.slope;
-    const y = slope * (other - this.pointA.x) + this.pointA.y;
+    const y = slope * (other - this.pointA.points.x) + this.pointA.points.y;
     const newPoint = new Point(other, y);
-    const consistOf = isBetween([this.pointA.x, this.pointB.x], other);
-    if (this.pointA.x == this.pointB.x && consistOf) {
-      return this.pointA.y;
+    const consistOf = isBetween([this.pointA.points.x, this.pointB.points.x], other);
+    if (this.pointA.points.x == this.pointB.points.x && consistOf) {
+      return this.pointA.points.y;
     }
     if (this.hasPoint(newPoint)) {
       return y;
@@ -137,8 +135,8 @@ class Line {
       return null;
     }
     const t = d / this.length;
-    const x = (1 - t) * this.pointA.x + t * this.pointB.x;
-    const y = (1 - t) * this.pointA.y + t * this.pointB.y;
+    const x = (1 - t) * this.pointA.points.x + t * this.pointB.points.x;
+    const y = (1 - t) * this.pointA.points.y + t * this.pointB.points.y;
     return new Point(x, y);
   }
 
@@ -150,8 +148,8 @@ class Line {
       return null;
     }
     const t = d / this.length;
-    const x = (1 - t) * this.pointB.x + t * this.pointA.x;
-    const y = (1 - t) * this.pointB.y + t * this.pointA.y;
+    const x = (1 - t) * this.pointB.points.x + t * this.pointA.points.x;
+    const y = (1 - t) * this.pointB.points.y + t * this.pointA.points.y;
     return new Point(x, y);
   }
 }

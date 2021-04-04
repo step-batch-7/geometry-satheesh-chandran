@@ -1,9 +1,7 @@
 const Line = require('./line');
 const Point = require('./point');
 
-const isBetween = function(range, num) {
-  return range[0] < num && range[1] > num;
-};
+const isBetween = ([min, max], num) => min < num && max > num;
 
 class Rectangle {
   constructor(end1, end2) {
@@ -13,45 +11,60 @@ class Rectangle {
   }
 
   toString() {
-    return `[Rectangle (${this.a.x},${this.a.y}) to (${this.c.x},${this.c.y})]`;
+    return `[Rectangle (${this.a.points.x},${this.a.points.y}) to (${this.c.points.x},${this.c.points.y})]`;
   }
 
   get area() {
-    const length = Math.abs(this.a.x - this.c.x);
-    const breadth = Math.abs(this.a.y - this.c.y);
-    return length * breadth;
+    const pointA = this.a.points;
+    const pointC = this.c.points;
+    return Math.abs(pointA.x - pointC.x) * Math.abs(pointA.y - pointC.y);
   }
 
   get perimeter() {
-    const length = Math.abs(this.a.x - this.c.x);
-    const breadth = Math.abs(this.a.y - this.c.y);
-    return 2 * (length + breadth);
+    const pointA = this.a.points;
+    const pointC = this.c.points;
+    return 2 * (Math.abs(pointA.x - pointC.x) + Math.abs(pointA.y - pointC.y));
   }
 
   isEqualTo(other) {
     if (!(other instanceof Rectangle)) {
       return false;
     }
-    const b = new Point(this.c.x, this.a.y);
-    const d = new Point(this.a.x, this.c.y);
-    const equality =
+    const pointA = this.a.points;
+    const pointC = this.c.points;
+
+    const b = new Point(pointC.x, pointA.y);
+    const d = new Point(pointA.x, pointC.y);
+    return (
       (this.a.isEqualTo(other.a) && this.c.isEqualTo(other.c)) ||
       (this.a.isEqualTo(other.c) && this.c.isEqualTo(other.a)) ||
       (other.a.isEqualTo(b) && other.c.isEqualTo(d)) ||
-      (other.a.isEqualTo(d) && other.c.isEqualTo(b));
-    return equality;
+      (other.a.isEqualTo(d) && other.c.isEqualTo(b))
+    );
   }
 
   hasPoint(p) {
     if (!(p instanceof Point)) {
       return false;
     }
-    const b = new Point(this.c.x, this.a.y);
-    const d = new Point(this.a.x, this.c.y);
-    const ab = new Line(this.a, { x: b.x, y: b.y });
-    const bc = new Line({ x: b.x, y: b.y }, this.c);
-    const cd = new Line(this.c, { x: d.x, y: d.y });
-    const da = new Line({ x: d.x, y: d.y }, this.a);
+    const b = new Point(this.c.points.x, this.a.points.y);
+    const d = new Point(this.a.points.x, this.c.points.y);
+    const ab = new Line(
+      { x: this.a.points.x, y: this.a.points.y },
+      { x: b.points.x, y: b.points.y }
+    );
+    const bc = new Line(
+      { x: b.points.x, y: b.points.y },
+      { x: this.c.points.x, y: this.c.points.y }
+    );
+    const cd = new Line(
+      { x: this.c.points.x, y: this.c.points.y },
+      { x: d.points.x, y: d.points.y }
+    );
+    const da = new Line(
+      { x: d.points.x, y: d.points.y },
+      { x: this.a.points.x, y: this.a.points.y }
+    );
     return ab.hasPoint(p) || bc.hasPoint(p) || cd.hasPoint(p) || da.hasPoint(p);
   }
 
@@ -59,13 +72,35 @@ class Rectangle {
     if (!(p instanceof Point)) {
       return false;
     }
-    const b = new Point(this.c.x, this.a.y);
-    const d = new Point(this.a.x, this.c.y);
-    const xMin = Math.min(this.a.x, this.c.x, b.x, d.x);
-    const xMax = Math.max(this.a.x, this.c.x, b.x, d.x);
-    const yMin = Math.min(this.a.y, this.c.y, b.y, d.y);
-    const yMax = Math.max(this.a.y, this.c.y, b.y, d.y);
-    return isBetween([xMin, xMax], p.x) && isBetween([yMin, yMax], p.y);
+    const b = new Point(this.c.points.x, this.a.points.y);
+    const d = new Point(this.a.points.x, this.c.points.y);
+    const xMin = Math.min(
+      this.a.points.x,
+      this.c.points.x,
+      b.points.x,
+      d.points.x
+    );
+    const xMax = Math.max(
+      this.a.points.x,
+      this.c.points.x,
+      b.points.x,
+      d.points.x
+    );
+    const yMin = Math.min(
+      this.a.points.y,
+      this.c.points.y,
+      b.points.y,
+      d.points.y
+    );
+    const yMax = Math.max(
+      this.a.points.y,
+      this.c.points.y,
+      b.points.y,
+      d.points.y
+    );
+    return (
+      isBetween([xMin, xMax], p.points.x) && isBetween([yMin, yMax], p.points.y)
+    );
   }
 }
 

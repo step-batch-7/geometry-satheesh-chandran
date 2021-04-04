@@ -1,38 +1,44 @@
 class Point {
+  #x;
+  #y;
+
   constructor(x, y) {
-    [this.x, this.y] = [x, y];
+    [this.#x, this.#y] = [x, y];
     Object.freeze(this);
   }
+
+  get points() {
+    return { x: this.#x, y: this.#y };
+  }
+
   toString() {
-    return `[Point @(${this.x},${this.y})]`;
+    return `[Point @(${this.#x},${this.#y})]`;
   }
   visit(other) {
-    if (typeof other !== 'function') {
-      return undefined;
-    }
-    return other(this.x, this.y);
+    return typeof other === 'function' ? other(this.#x, this.#y) : undefined;
   }
   isEqualTo(other) {
-    if (other instanceof Point) {
-      return this.x == other.x && this.y == other.y;
-    }
-    return false;
+    return (
+      other instanceof Point &&
+      this.#x == other.points.x &&
+      this.#y == other.points.y
+    );
   }
   clone() {
-    return new Point(this.x, this.y);
+    return new Point(this.#x, this.#y);
   }
 
   findDistanceTo(other) {
     if (!(other instanceof Point)) {
       return NaN;
     }
-    const xRange = this.x - other.x;
-    const yRange = this.y - other.y;
+    const xRange = this.#x - other.points.x;
+    const yRange = this.#y - other.points.y;
     return Math.sqrt(xRange * xRange + yRange * yRange);
   }
 
-  isOn(a) {
-    return a.hasPoint(this);
+  isOn(line) {
+    return line.hasPoint(this);
   }
 }
 

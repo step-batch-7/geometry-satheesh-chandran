@@ -1,50 +1,48 @@
 const Point = require('./point');
 
 class Circle {
-  constructor(a, b) {
-    this.o = new Point(a.x, a.y);
-    this.r = b;
+  constructor(a, radius) {
+    this.origin = new Point(a.x, a.y);
+    this.radius = radius;
     Object.freeze(this);
   }
+
   toString() {
-    return `[Circle @(${this.o.x},${this.o.y}) radius ${this.r}]`;
+    return `[Circle @(${this.origin.points.x},${this.origin.points.y}) radius ${this.radius}]`;
   }
+
   isEqualTo(other) {
-    return this.o.isEqualTo(other.o) && this.r == other.r;
+    return this.origin.isEqualTo(other.origin) && this.radius == other.radius;
   }
 
   get area() {
-    return Math.PI * this.r * this.r;
+    return Math.PI * this.radius ** 2;
   }
 
   get perimeter() {
-    return 2 * Math.PI * this.r;
+    return 2 * Math.PI * this.radius;
   }
 
-  hasPoint(p) {
-    if (!(p instanceof Point)) {
+  hasPoint(point) {
+    if (!(point instanceof Point)) {
       return false;
     }
-    const x = p.x;
-    const y = p.y;
-    const g = this.o.x;
-    const h = this.o.y;
-    return (x - g) ** 2 + (y - h) ** 2 == this.r ** 2;
+    const { x, y } = point.points;
+    const { x: g, y: h } = this.origin.points;
+    return (x - g) ** 2 + (y - h) ** 2 == this.radius ** 2;
   }
 
   moveTo(point) {
-    return new Circle(point, this.r);
+    return new Circle(point, this.radius);
   }
 
-  covers(p) {
-    if (!(p instanceof Point)) {
+  covers(point) {
+    if (!(point instanceof Point)) {
       return false;
     }
-    const x = p.x;
-    const y = p.y;
-    const g = this.o.x;
-    const h = this.o.y;
-    return (x - g) ** 2 + (y - h) ** 2 < this.r ** 2;
+    const { x, y } = point.points;
+    const { x: g, y: h } = this.origin.points;
+    return (x - g) ** 2 + (y - h) ** 2 < this.radius ** 2;
   }
 }
 
